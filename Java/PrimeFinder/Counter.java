@@ -20,8 +20,12 @@ public class Counter {
 	}
 	
 	public int move() {
-		this.counter++;
-		if (is_prime(counter)) return counter;
+		boolean ans;
+		synchronized(this) {
+			this.counter++;
+			ans = is_prime(counter); 
+		}
+		if (ans) return counter;
 		else return -1;
 	}
 }
