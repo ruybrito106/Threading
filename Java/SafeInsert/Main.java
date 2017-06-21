@@ -1,5 +1,7 @@
 import java.util.concurrent.TimeUnit;
 import java.util.Scanner;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class Main {
 
@@ -42,7 +44,7 @@ class MyRunnable implements Runnable {
   public void run() {
     while (true) {
       int val = Integer.parseInt(Thread.currentThread().getName());
-      this.l.Increment(val);
+      this.l.Increment2(val);
     }
   }
 
@@ -61,6 +63,17 @@ class Lista {
     synchronized(this) {
       this.list[this.cur_pos] = val;
       this.cur_pos = (this.cur_pos + 1) % 100;
+    }
+  }
+
+  ReentrantLock lock = new ReentrantLock();
+  public void Increment2(int val) {
+    lock.lock();
+    try {
+      this.list[this.cur_pos] = val;
+      this.cur_pos = (this.cur_pos + 1) % 100;
+    } finally {
+      lock.unlock();
     }
   }
 
