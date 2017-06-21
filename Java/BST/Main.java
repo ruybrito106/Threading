@@ -40,8 +40,8 @@ class MyRunnable implements Runnable {
   public void run() {
     Random rand = new Random();
     int value;
-    for(int i = 0; i < 20000 / N; i++) {
-      value = rand.nextInt(100);
+    for(int i = 0; i < 2000000 / N; i++) {
+      value = rand.nextInt(100000);
       this.b.insert(this.b.getRoot(), new Node(value));
     }
   }
