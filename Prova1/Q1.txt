@@ -1,0 +1,8 @@
+Pode haver deadlock sim. Considere a seguinte execução:
+1. A thread 1 dá lock em A, para utilizar de forma exclusiva os recursos do bloco.
+2. A thread 1 dá lock em B (ao mesmo tempo que em A), para utilizade forma exclusiva os recursos desse bloco também.
+3. A thread 1 dá unlock em B, isto é, chama B.wait(), mas não em A.
+4. A thread 2 precisa dar lock em A e em B para notificar a Thread 1 e a Thread 1 poder liberar o bloco A.
+5. Ambas ficam travadas indefinidamente dado que:
+    5.1. A Thread 2 ficará travada esperando a Thread 1 liberar A.
+    5.2. A Thread 1 ficará travada esperando a Thread 2 notificá-la, mas isso só ocorreria se a Thread 2 desse lock em A e B, o que é impossível.
